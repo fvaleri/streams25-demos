@@ -1,0 +1,22 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: pool-b
+  labels:
+    # label pointing to the Kafka cluster
+    strimzi.io/cluster: my-cluster
+spec:
+  replicas: 2
+  roles:
+    - broker
+  resources:
+    limits:
+      cpu: 4000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 4Gi
+  storage:
+    size: 20Gi
+    type: persistent-claim
+    deleteClaim: false

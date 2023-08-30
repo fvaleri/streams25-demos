@@ -1,0 +1,43 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-cluster
+  annotations:
+    # annotation required to enable KafkaNodePools
+    strimzi.io/node-pools: enabled
+spec:
+  kafka:
+    # replicas field is required, but ignored when KafkaNodePools are used
+    replicas: 3
+    version: 3.5.0
+    config:
+      inter.broker.protocol.version: "3.5"
+      num.partitions: 3
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    # storage field is required, but ignored when KafkaNodePools are used
+    storage:
+      size: 10Gi
+      type: persistent-claim
+      deleteClaim: false
+  zookeeper:
+    replicas: 3
+    storage:
+      size: 5Gi
+      type: persistent-claim
+      deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
