@@ -80,8 +80,8 @@ hello uto
 <br>
 
 ---
-Finally, try to increase the number of topic partitions (reduction is not supported).
-This was not possible with the old implementation, while changing the replication factor is still not supported.
+Finally, try to increase the number of topic partitions.
+Reduction and changing the replication factor is not supported, but you can use the `kafka-reassign-tool` for that.
 
 ```sh
 $ krun kafka-topics.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --describe
