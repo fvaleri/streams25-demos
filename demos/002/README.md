@@ -7,17 +7,6 @@ The Unidirectional Topic Operator (UTO) only synchronizes the topic state from K
 This is backwards compatible with the existing `KafkaTopic` resources, but any topic configuration change done in Kafka will be reverted.
 You can un-manage a topic by simply setting the `strimzi.io/managed="false"` annotation.
 
-<sub>
-We disable them in this demo, but finalizers are used by default to avoid missing topic deletion events when the UTO is not running.
-A common pitfall is that the namespace becomes stuck in a "terminating" state when you try to delete it without first removing all finalizers.
-In order to avoid this, you have to first stop the UTO, and then remove all finalizers from KafkaTopic resources.
-
-```sh
-kubectl patch k my-cluster --type json -p '[{"op":"remove","path":"/spec/entityOperator/topicOperator"}]'
-kubectl get kt -o yaml | yq 'del(.items[].metadata.finalizers[])' | kubectl apply -f -
-```
-</sub>
-
 <br>
 
 ---
@@ -101,4 +90,12 @@ Topic: my-topic	TopicId: CPgTTY5hShSiUn8iApkD-A	PartitionCount: 5	ReplicationFac
 	Topic: my-topic	Partition: 2	Leader: 2	Replicas: 2,1,0	Isr: 2,1,0
 	Topic: my-topic	Partition: 3	Leader: 1	Replicas: 1,2,0	Isr: 1,2,0
 	Topic: my-topic	Partition: 4	Leader: 2	Replicas: 2,0,1	Isr: 2,0,1
+```
+
+We disable them in this demo, but finalizers are used by default to avoid missing topic deletion events when the UTO is not running.
+A common pitfall is that the namespace becomes stuck in a "terminating" state when you try to delete it without first removing all finalizers.
+If this happens, you can simply remove finalizers from all `KafkaTopic` resources at once with the following command.
+
+```sh
+kubectl get kt -o yaml | yq 'del(.items[].metadata.finalizers[])' | kubectl apply -f -
 ```
