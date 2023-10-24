@@ -93,7 +93,7 @@ Topic: my-topic	TopicId: CPgTTY5hShSiUn8iApkD-A	PartitionCount: 5	ReplicationFac
 ```
 
 We disable them in this demo, but finalizers are used by default to avoid missing topic deletion events when the UTO is not running.
-A common pitfall is that the namespace becomes stuck in a "terminating" state when you try to delete it without first removing all finalizers.
+A common pitfall is that the namespace becomes stuck in a "terminating" state when you try to delete it without first deleting all topics.
 If this happens, you can simply remove finalizers from all `KafkaTopic` resources at once with the following command.
 
 ```sh
