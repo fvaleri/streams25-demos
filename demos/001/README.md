@@ -86,11 +86,11 @@ kWaWWDe5SUagT7J3Xi9xLw
 Let's send and receive a message to confirm it works.
 
 ```sh
-$ krun kafka-console-producer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic
+$ krun bin/kafka-console-producer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic
 >hello nodepools
 >^C
 
-$ krun kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
+$ krun bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
 hello nodepools
 ^CProcessed a total of 1 messages
 ```

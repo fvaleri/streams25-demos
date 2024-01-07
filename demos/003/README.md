@@ -54,11 +54,11 @@ my-cluster-entity-operator-564cbdb7cc-q84z7   2/2     Running   0          3m
 Let's send and receive a message to confirm it works.
 
 ```sh
-$ krun kafka-console-producer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic
+$ krun bin/kafka-console-producer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic
 >hello kraft
 >^C
 
-$ krun kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
+$ krun bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
 hello kraft
 ^CProcessed a total of 1 messages
 ```
