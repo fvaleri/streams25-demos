@@ -57,11 +57,11 @@ my-cluster-zookeeper-2                        1/1     Running   0          100s
 Let's send and receive a message to confirm it works.
 
 ```sh
-$ krun bin/kafka-console-producer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic
+$ kubectl-kafka bin/kafka-console-producer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic
 >hello uto
 >^C
 
-$ krun bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
+$ kubectl-kafka bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
 hello uto
 ^CProcessed a total of 1 messages
 ```
@@ -73,7 +73,7 @@ Finally, try to increase the number of topic partitions.
 Reduction and changing the replication factor is not supported, but you can use the `kafka-reassign-tool` for that.
 
 ```sh
-$ krun bin/kafka-topics.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --describe
+$ kubectl-kafka bin/kafka-topics.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --describe
 Topic: my-topic	TopicId: WyhsoDQRSXqa8k2myxQrrA	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=2,message.format.version=3.0-IV1
 	Topic: my-topic	Partition: 0	Leader: 1	Replicas: 1,0,2	Isr: 1,0,2
 	Topic: my-topic	Partition: 1	Leader: 0	Replicas: 0,2,1	Isr: 0,2,1
@@ -83,7 +83,7 @@ $ kubectl patch kt my-topic --type merge -p '
   spec:
     partitions: 5'
 
-$ krun bin/kafka-topics.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --describe
+$ kubectl-kafka bin/kafka-topics.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --describe
 Topic: my-topic	TopicId: CPgTTY5hShSiUn8iApkD-A	PartitionCount: 5	ReplicationFactor: 3	Configs: min.insync.replicas=2,message.format.version=3.0-IV1
 	Topic: my-topic	Partition: 0	Leader: 1	Replicas: 1,0,2	Isr: 1,0,2
 	Topic: my-topic	Partition: 1	Leader: 0	Replicas: 0,2,1	Isr: 0,2,1

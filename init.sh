@@ -11,7 +11,7 @@ for x in kubectl yq; do
   fi
 done
 
-krun() { kubectl run krun-"$(date +%s)" -itq --rm --restart="Never" \
+kubectl-kafka() { kubectl run kubectl-kafka-"$(date +%s)" -itq --rm --restart="Never" \
   --image="quay.io/strimzi/kafka:latest-kafka-$INIT_KAFKA_VERSION" -- sh -c "$*; exit 0"; }
 
 kubectl delete ns "$INIT_NAMESPACE" target --wait &>/dev/null
