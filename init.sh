@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
-# Source this file to configure the environment.
 
 INIT_NAMESPACE="test"
 INIT_KAFKA_VERSION="3.5.0"
 INIT_STRIMZI_VERSION="0.36.0"
 
+if [[ "${BASH_SOURCE[0]}" -ef "$0" ]]; then
+  echo "Source this script, not execute it"; exit 1
+fi
+
 for x in kubectl yq; do
   if ! command -v "$x" &>/dev/null; then
-    echo "Missing required utility: $x" && return 1
+    echo "Missing required utility: $x"; return 1
   fi
 done
 
