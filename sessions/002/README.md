@@ -36,7 +36,7 @@ subscription.operators.coreos.com/my-streams patched
 After the Cluster Operator restart, we can deploy a Kafka cluster with the new Topic Operator.
 
 ```sh
-$ kubectl create -f demos/002/resources
+$ kubectl create -f sessions/002/resources
 kafka.kafka.strimzi.io/my-cluster created
 kafkatopic.kafka.strimzi.io/my-topic created
 
