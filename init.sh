@@ -15,7 +15,7 @@ for x in kubectl yq; do
 done
 
 kubectl-kafka() { kubectl run kubectl-kafka-"$(date +%s)" -itq --rm --restart="Never" \
-  --image="quay.io/strimzi/kafka:latest-kafka-$KAFKA_VERSION" -- sh -c "$*; exit 0"; }
+  --image="quay.io/strimzi/kafka:latest-kafka-$KAFKA_VERSION" -- sh -c "/opt/kafka/$*"; }
 
 kubectl delete ns "$NAMESPACE" target --wait &>/dev/null
 kubectl wait --for=delete ns/"$NAMESPACE" --timeout=120s &>/dev/null
