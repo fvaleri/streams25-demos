@@ -37,7 +37,7 @@ After the Cluster Operator restart, we can now deploy a Kafka cluster with just 
 This can be useful for development and testing, but you would probably need two dedicated pools in production (controllers and brokers).
 
 ```sh
-$ kubectl create -f sessions/003/resources
+$ kubectl create -f sessions/003/install
 kafkanodepool.kafka.strimzi.io/combined created
 kafka.kafka.strimzi.io/my-cluster created
 kafkatopic.kafka.strimzi.io/my-topic created

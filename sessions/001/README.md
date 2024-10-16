@@ -51,7 +51,7 @@ subscription.operators.coreos.com/my-streams patched
 After the Cluster Operator restart, we can verify if the Kafka cluster is formed correctly.
 
 ```sh
-$ kubectl create -f sessions/001/resources
+$ kubectl create -f sessions/001/install
 kafkanodepool.kafka.strimzi.io/pool-a created
 kafkanodepool.kafka.strimzi.io/pool-b created
 kafka.kafka.strimzi.io/my-cluster created

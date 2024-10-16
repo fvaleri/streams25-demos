@@ -4,9 +4,7 @@ NAMESPACE="test"
 KAFKA_VERSION="3.5.0"
 STRIMZI_VERSION="0.36.0"
 
-if [[ "${BASH_SOURCE[0]}" -ef "$0" ]]; then
-  echo "Source this script, not execute it"; exit 1
-fi
+[[ "${BASH_SOURCE[0]}" -ef "$0" ]] && echo "Usage: source init.sh" && exit 1
 
 for x in kubectl yq; do
   if ! command -v "$x" &>/dev/null; then
@@ -14,8 +12,12 @@ for x in kubectl yq; do
   fi
 done
 
-kubectl-kafka() { kubectl run kubectl-kafka-"$(date +%s)" -itq --rm --restart="Never" \
-  --image="quay.io/strimzi/kafka:latest-kafka-$KAFKA_VERSION" -- sh -c "/opt/kafka/$*"; }
+kubectl-kafka() {
+  kubectl get po kafka-tools &>/dev/null || kubectl run kafka-tools -q --restart="Never" \
+    --image="apache/kafka:latest" -- sh -c "trap : TERM INT; sleep infinity & wait"
+  kubectl wait --for=condition=ready po kafka-tools &>/dev/null
+  kubectl exec kafka-tools -itq -- sh -c "/opt/kafka/$*"
+}
 
 kubectl delete ns "$NAMESPACE" target --wait &>/dev/null
 kubectl wait --for=delete ns/"$NAMESPACE" --timeout=120s &>/dev/null
